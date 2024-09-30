@@ -1,5 +1,12 @@
-import Home from "./pages/Home"
+import { NavigationContainer } from "@react-navigation/native"
+import RootNavigator from "./routes"
+import { StatusBar } from "expo-status-bar"
 
 export default function App() {
-  return <Home />
+  return (
+    <NavigationContainer>
+      <StatusBar />
+      {RootNavigator()}
+    </NavigationContainer>
+  )
 }
