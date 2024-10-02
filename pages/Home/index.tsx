@@ -1,12 +1,26 @@
 import Caption from "../../components/atoms/Caption"
 import Title from "../../components/atoms/Title"
-import { Container } from "./styles"
+import BaseButton from "../../components/molecules/BaseButton"
+import TaskCard from "../../components/organisms/TaskCard"
+import { CardsContainer, HeaderContainer } from "./styles"
 
 export default function Home() {
   return (
-    <Container>
-      <Title>Wanna Do</Title>
-      <Caption>Seja bem vindo!</Caption>
-    </Container>
+    <>
+      <HeaderContainer>
+        <Title>Wanna Do</Title>
+        <Caption>Seja bem vindo!</Caption>
+        <BaseButton>+ Criar tarefa</BaseButton>
+      </HeaderContainer>
+      <CardsContainer>
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
+        <TaskCard />
+      </CardsContainer>
+    </>
   )
 }
