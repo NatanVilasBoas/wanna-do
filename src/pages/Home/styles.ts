@@ -1,7 +1,7 @@
 import styled from "styled-components/native"
 
 export const Container = styled.View`
-  background-color: #f2eed7;
+  background-color: ${props => props.theme.colors.secondaryMain};
   flex: 1;
 `
 
@@ -23,7 +23,7 @@ export const CardsContainer = styled.ScrollView.attrs(() => ({
     flexGrow: 1
   }
 }))`
-  background-color: #181c14;
+  background-color: ${props => props.theme.colors.greyDarkest};
   padding: 32px 16px 0px;
   border-radius: 40px 40px 0px 0px;
 `

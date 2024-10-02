@@ -5,5 +5,5 @@ export const Container = styled.View`
   padding: 24px;
   border-radius: 20px;
   margin: 12px 0px;
-  background-color: #626f47;
+  background-color: ${props => props.theme.colors.primaryMain};
 `
