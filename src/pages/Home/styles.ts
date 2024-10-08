@@ -20,7 +20,8 @@ export const ButtonContainer = styled.View`
 
 export const CardsContainer = styled.ScrollView.attrs(() => ({
   contentContainerStyle: {
-    flexGrow: 1
+    flexGrow: 1,
+    gap: 20
   }
 }))`
   background-color: ${props => props.theme.colors.greyDarkest};
