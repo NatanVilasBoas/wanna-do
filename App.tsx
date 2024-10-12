@@ -11,7 +11,7 @@ export default function App() {
       <NavigationContainer>
         <ThemeProvider theme={theme}>
           <StatusBar backgroundColor={theme.colors.primaryMain} />
-          {RootNavigator()}
+          <RootNavigator />
         </ThemeProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
