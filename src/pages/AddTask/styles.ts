@@ -6,4 +6,5 @@ export const Container = styled.ScrollView.attrs(() => ({
   }
 }))`
   background-color: ${props => props.theme.colors.secondaryLight};
+  padding-horizontal: 20px;
 `
