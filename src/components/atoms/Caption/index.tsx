@@ -1,10 +1,6 @@
-import { TextProps } from "react-native"
 import { StyledText } from "./styles"
+import { StyledTextProps } from "../../../shared/interfaces/StyledTextProps"
 
-interface CaptionProps extends TextProps {
-  children?: React.ReactNode
-}
-
-export default function Caption({ children, ...props }: CaptionProps) {
+export default function Caption({ children, ...props }: StyledTextProps) {
   return <StyledText {...props}>{children}</StyledText>
 }
