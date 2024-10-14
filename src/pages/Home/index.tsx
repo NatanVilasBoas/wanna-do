@@ -3,6 +3,7 @@ import BaseButton from "../../components/atoms/BaseButton"
 import TaskCard from "../../components/organisms/TaskCard"
 import { CardsContainer, HeaderContainer, Container, ButtonContainer } from "./styles"
 import { useNavigation } from "@react-navigation/native"
+import theme from "../../styles/theme"
 
 export default function Home() {
   const navigation = useNavigation()
@@ -10,7 +11,7 @@ export default function Home() {
   return (
     <Container>
       <HeaderContainer>
-        <Caption>Seja bem vindo!</Caption>
+        <Caption style={{ color: theme.colors.greyDarkest }}>Seja bem vindo!</Caption>
         <ButtonContainer>
           <BaseButton onPress={() => navigation.navigate("AddTask")}>+ Criar tarefa</BaseButton>
         </ButtonContainer>
