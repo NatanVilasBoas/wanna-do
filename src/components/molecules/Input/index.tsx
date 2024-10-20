@@ -6,5 +6,14 @@ interface InputProps extends TextInputProps {
 }
 
 export default function Input({ label, ...props }: InputProps) {
-  return <BaseInput mode="outlined" label={label} {...props} />
+  return (
+    <BaseInput
+      mode="outlined"
+      style={{
+        marginBottom: 24
+      }}
+      label={label}
+      {...props}
+    />
+  )
 }

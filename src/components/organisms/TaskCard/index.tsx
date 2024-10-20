@@ -21,20 +21,20 @@ export default function TaskCard() {
       renderRightActions={() => (
         <ButtonsContainer>
           <TouchableOpacity activeOpacity={0.8}>
-            <AntDesign name="edit" size={24} color={isOpenOptions ? theme.colors.secondaryLight : "transparent"} />
+            <AntDesign name="edit" size={24} color={isOpenOptions ? theme.colors.greyDarkest : "transparent"} />
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.8}>
-            <AntDesign name="delete" size={24} color={isOpenOptions ? theme.colors.secondaryLight : "transparent"} />
+            <AntDesign name="delete" size={24} color={isOpenOptions ? theme.colors.greyDarkest : "transparent"} />
           </TouchableOpacity>
         </ButtonsContainer>
       )}
     >
       <Container onPress={() => setIsOpenDropdown(!isOpenDropdown)}>
         <TitleContainer>
-          <Caption>Teste 1</Caption>
-          <AntDesign name={isOpenDropdown ? "up" : "down"} size={24} color={theme.colors.greyDarkest} />
+          <Caption style={{ color: theme.colors.greyLightest }}>Teste 1</Caption>
+          <AntDesign name={isOpenDropdown ? "up" : "down"} size={24} color={theme.colors.greyLightest} />
         </TitleContainer>
-        {isOpenDropdown && <Description>Descrição da tarefa</Description>}
+        {isOpenDropdown && <Description style={{ color: theme.colors.greyLightest }}>Descrição da tarefa</Description>}
       </Container>
     </ReanimatedSwipeable>
   )

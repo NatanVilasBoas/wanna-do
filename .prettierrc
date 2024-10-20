@@ -4,7 +4,22 @@
   "semi": false,
   "singleQuote": false,
   "jsxSingleQuote": false,
-  "endOfLine": "auto",
   "printWidth": 120,
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "endOfLine": "auto",
+  "importOrder": [
+    "^react",
+    "^react-native",
+    "^(react(?:/|$))",
+    "<THIRD_PARTY_MODULES>",
+    "^@/(?!components(?:/|$))(.*)$",
+    "^@/components/(.*)$",
+    "^@/utils/(.*)$",
+    "^@/assets/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }
