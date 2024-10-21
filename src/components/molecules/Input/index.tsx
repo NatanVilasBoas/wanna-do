@@ -1,4 +1,6 @@
 import { TextInputProps } from "react-native-paper"
+
+import theme from "../../../styles/theme"
 import BaseInput from "../../atoms/BaseInput"
 
 interface InputProps extends TextInputProps {
@@ -8,10 +10,11 @@ interface InputProps extends TextInputProps {
 export default function Input({ label, ...props }: InputProps) {
   return (
     <BaseInput
-      mode="outlined"
       style={{
-        marginBottom: 24
+        marginBottom: 24,
+        backgroundColor: "transparent"
       }}
+      activeUnderlineColor={theme.colors.primaryLight}
       label={label}
       {...props}
     />

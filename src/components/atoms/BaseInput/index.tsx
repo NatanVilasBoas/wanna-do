@@ -1,4 +1,5 @@
 import { TextInput, TextInputProps } from "react-native-paper"
+
 import theme from "../../../styles/theme"
 
 export default function BaseInput({ ...props }: TextInputProps) {

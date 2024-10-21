@@ -6,7 +6,7 @@ export const Container = styled.TouchableOpacity.attrs(() => ({
   width: 100%;
   padding: 24px;
   border-radius: 20px;
-  background-color: ${props => props.theme.colors.primaryMain};
+  background-color: ${props => props.theme.colors.primaryLight};
 `
 
 export const TitleContainer = styled.View`

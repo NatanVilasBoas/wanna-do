@@ -5,6 +5,10 @@ export const Container = styled.ScrollView.attrs(() => ({
     flexGrow: 1
   }
 }))`
-  background-color: ${props => props.theme.colors.secondaryLight};
+  background-color: ${props => props.theme.colors.greyLightest};
   padding-horizontal: 20px;
+`
+
+export const Inner = styled.View`
+  flex: 1;
 `
