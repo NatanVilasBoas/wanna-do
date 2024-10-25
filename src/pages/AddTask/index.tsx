@@ -34,6 +34,7 @@ export default function AddTask() {
               { value: "alta", label: "Alta" }
             ]}
           />
+          <Input label="Data" />
         </Inner>
         <BaseButton style={{ marginBottom: 60 }}>
           <Text style={{ textAlign: "center" }}>Criar tarefa</Text>
