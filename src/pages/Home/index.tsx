@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { useNavigation } from "@react-navigation/native"
-import { addDoc, collection, getDocs, onSnapshot } from "firebase/firestore"
+import { collection, onSnapshot } from "firebase/firestore"
 
 import { FIRESTORE_DB } from "../../../firebaseConfig"
 import BaseButton from "../../components/atoms/BaseButton"
@@ -44,10 +44,6 @@ export default function Home() {
     return () => subscriber()
   }, [])
 
-  const addNewTask = async () => {
-    addDoc(collection(FIRESTORE_DB, "tasks"), { title: "Testing the DB 2", description: "just one test" })
-  }
-
   return (
     <>
       <CustomStatusBar />
@@ -56,12 +52,12 @@ export default function Home() {
         <HeaderContainer>
           <Caption style={{ color: theme.colors.greyDarkest }}>Seja bem vindo!</Caption>
           <ButtonContainer>
-            <BaseButton onPress={() => addNewTask()}>+ Criar tarefa</BaseButton>
+            <BaseButton onPress={() => navigation.navigate("AddTask")}>+ Criar tarefa</BaseButton>
           </ButtonContainer>
         </HeaderContainer>
         <CardsContainer>
-          {tasks.map((task, index) => {
-            return <TaskCard key={index} title={task.title} description={task.description} />
+          {tasks.map(task => {
+            return <TaskCard key={task.id} title={task.title} description={task.description} />
           })}
         </CardsContainer>
       </Container>
