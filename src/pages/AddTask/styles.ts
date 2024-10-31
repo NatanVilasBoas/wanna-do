@@ -12,3 +12,12 @@ export const Inner = styled.View`
   flex: 1;
   padding-horizontal: 20px;
 `
+
+export const DateContainerRow = styled.View`
+  margin-top: 16px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 24px;
+`
