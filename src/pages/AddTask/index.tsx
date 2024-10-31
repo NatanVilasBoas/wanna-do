@@ -10,6 +10,7 @@ import Caption from "../../components/atoms/Caption"
 import Title from "../../components/atoms/Title"
 import Input from "../../components/molecules/Input"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
+import Header from "../../components/organisms/Header"
 import theme from "../../styles/theme"
 import { Container, Inner } from "./styles"
 
@@ -51,6 +52,7 @@ export default function AddTask() {
   return (
     <>
       <CustomStatusBar backgroundColor={theme.colors.greyLightest} />
+      <Header backgroundColor={theme.colors.greyLightest} />
       <Container>
         <Inner>
           <Title>Nova tarefa</Title>

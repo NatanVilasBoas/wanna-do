@@ -1,7 +1,11 @@
 import styled from "styled-components/native"
 
-export const Container = styled.View`
-  background-color: ${props => props.theme.colors.secondaryMain};
+interface ContainerProps {
+  backgroundColor?: string
+}
+
+export const Container = styled.View<ContainerProps>`
+  background-color: ${props => props.backgroundColor ?? props.theme.colors.secondaryMain};
   flex-direction: row;
   width: 100%;
   justify-content: space-between;

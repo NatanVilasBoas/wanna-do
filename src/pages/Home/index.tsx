@@ -33,9 +33,8 @@ export default function Home() {
         snapshot.docs.forEach(doc => {
           tasks.push({
             id: doc.id,
-            title: doc.data().title,
-            description: doc.data().description
-          })
+            ...doc.data()
+          } as Task)
         })
         setTasks(tasks)
       }
@@ -47,7 +46,7 @@ export default function Home() {
   return (
     <>
       <CustomStatusBar />
-      <Header />
+      <Header mode="home" />
       <Container>
         <HeaderContainer>
           <Caption style={{ color: theme.colors.greyDarkest }}>Seja bem vindo!</Caption>
@@ -56,6 +55,11 @@ export default function Home() {
           </ButtonContainer>
         </HeaderContainer>
         <CardsContainer>
+          {tasks.length === 0 && (
+            <Caption style={{ color: theme.colors.greyDarkest, textAlign: "center", marginTop: 64 }}>
+              Não há tarefas no momento.
+            </Caption>
+          )}
           {tasks.map(task => {
             return <TaskCard key={task.id} title={task.title} description={task.description} />
           })}
