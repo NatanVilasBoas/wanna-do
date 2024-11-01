@@ -1,5 +1,6 @@
 import { Text } from "react-native"
 import { SegmentedButtons } from "react-native-paper"
+import Toast from "react-native-toast-message"
 
 import { RouteProp } from "@react-navigation/native"
 import { addDoc, collection } from "firebase/firestore"
@@ -34,14 +35,25 @@ interface AddTaskProps {
 export default function AddTask({ route }: AddTaskProps) {
   const params = route.params
 
-  const handleSubmit = async ({ title, description, priority, date, time }: NewTask) => {
-    addDoc(collection(FIRESTORE_DB, "tasks"), { title, description, priority, date, time })
-    console.log("task adicionada")
-  }
-
   const validateTime = (text: string) => {
     const isValid = /^([01]\d|2[0-3]):([0-5]\d)$/.test(text)
     return isValid
+  }
+
+  const handleSubmit = async ({ title, description, priority, date, time }: NewTask) => {
+    try {
+      addDoc(collection(FIRESTORE_DB, "tasks"), { title, description, priority, date, time })
+      Toast.show({
+        type: "success",
+        text1: "Task criada"
+      })
+    } catch (error: any) {
+      Toast.show({
+        type: "error",
+        text1: "Não foi possível criar a task",
+        text2: error
+      })
+    }
   }
 
   const actualDate = new Date()

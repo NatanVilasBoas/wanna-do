@@ -1,8 +1,11 @@
-import { NavigationContainer } from "@react-navigation/native"
-import RootNavigator from "./src/routes"
-import { ThemeProvider } from "styled-components"
-import theme from "./src/styles/theme"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import Toast from "react-native-toast-message"
+
+import { NavigationContainer } from "@react-navigation/native"
+import { ThemeProvider } from "styled-components"
+
+import RootNavigator from "./src/routes"
+import theme from "./src/styles/theme"
 
 export default function App() {
   return (
@@ -10,6 +13,7 @@ export default function App() {
       <NavigationContainer>
         <ThemeProvider theme={theme}>
           <RootNavigator />
+          <Toast />
         </ThemeProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
