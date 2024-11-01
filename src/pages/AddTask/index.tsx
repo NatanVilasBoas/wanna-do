@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Text } from "react-native"
 import { SegmentedButtons } from "react-native-paper"
 
@@ -13,6 +12,7 @@ import DateInput from "../../components/molecules/DateInput"
 import Input from "../../components/molecules/Input"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
 import Header from "../../components/organisms/Header"
+import { dateFormat, timeFormat } from "../../shared/utils/dateFormat"
 import theme from "../../styles/theme"
 import { Container, DateContainerRow, Inner } from "./styles"
 
@@ -21,51 +21,29 @@ interface NewTask {
   description: string
   priority: "low" | "medium" | "high"
   date: string
+  time: string
 }
 
 export default function AddTask() {
-  const [date, setDate] = useState(new Date())
-  const [time, setTime] = useState(new Date())
-  const [showDatePicker, setShowDatePicker] = useState(false)
-  const [showTimePicker, setShowTimePicker] = useState(false)
-
-  const handleSubmit = async ({ title, description, priority, date }: NewTask) => {
-    addDoc(collection(FIRESTORE_DB, "tasks"), { title, description, priority, date: date.toString() })
+  const handleSubmit = async ({ title, description, priority, date, time }: NewTask) => {
+    addDoc(collection(FIRESTORE_DB, "tasks"), { title, description, priority, date, time })
     console.log("task adicionada")
   }
 
-  const onChangeDate = (dateSelected: Date) => {
-    if (dateSelected) {
-      setDate(dateSelected)
-    }
-    setShowDatePicker(false)
-  }
-
-  const onChangeTime = (dateSelected: Date) => {
-    if (dateSelected) {
-      setTime(dateSelected)
-    }
-    setShowTimePicker(false)
+  const validateTime = (text: string) => {
+    const isValid = /^([01]\d|2[0-3]):([0-5]\d)$/.test(text)
+    return isValid
   }
 
   const actualDate = new Date()
-
-  const formatData = (date: Date) => {
-    return date
-      .toLocaleDateString("pt-BR", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-      })
-      .toString()
-  }
 
   const formik = useFormik({
     initialValues: {
       title: "",
       description: "",
       priority: "low",
-      date: formatData(actualDate)
+      date: dateFormat(actualDate),
+      time: timeFormat(actualDate)
     },
     onSubmit: handleSubmit
   })
@@ -99,22 +77,18 @@ export default function AddTask() {
           {/* <Caption>Categoria</Caption> */}
           <DateContainerRow>
             <DateInput
-              value={date}
-              visible={showDatePicker}
-              onPress={() => setShowDatePicker(true)}
+              value={formik.values.date}
               mode="date"
-              onConfirm={onChangeDate}
-              onCancel={() => setShowDatePicker(false)}
-              style={{ width: "45%" }}
+              onChangeText={text => formik.handleChange("date")(text)}
+              containerStyle={{ width: "55%" }}
             />
             <DateInput
-              value={time}
-              visible={showTimePicker}
-              onPress={() => setShowTimePicker(true)}
+              value={formik.values.time}
               mode="time"
-              onConfirm={onChangeTime}
-              onCancel={() => setShowTimePicker(false)}
-              style={{ width: "45%" }}
+              onChangeText={text => {
+                formik.handleChange("time")(text)
+              }}
+              containerStyle={{ width: "35%" }}
             />
           </DateContainerRow>
         </Inner>

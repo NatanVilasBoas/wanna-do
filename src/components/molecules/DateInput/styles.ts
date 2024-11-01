@@ -1,13 +1,12 @@
 import styled from "styled-components/native"
 
-export const DateInputContainer = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.7
-})`
-  padding: 12px;
-  border-bottom-width: 0.5px;
-  border-color: ${({ theme }) => theme.colors.primaryLight};
-`
+interface ContainerProps {
+  isActive: boolean
+}
 
-export const ValueText = styled.Text`
+export const Container = styled.View<ContainerProps>`
+  padding-horizontal: 16px;
+  border-bottom-width: ${props => (props.isActive ? 1 : 0.5)}px;
   font-size: 16px;
+  border-color: ${props => (props.isActive ? props.theme.colors.primaryMain : props.theme.colors.primaryLight)};
 `
