@@ -23,7 +23,7 @@ export default function DateInput({ value, mode, containerStyle, ...props }: Dat
           color: isActive ? theme.colors.primaryLight : theme.colors.greyDarkest
         }}
       >
-        {mode === "date" ? "Data:" : "Horário:"}
+        {mode === "date" ? "Data" : "Horário"}
       </Caption>
       <MaskInput
         style={{ fontSize: 16, ...(typeof props.style === "object" ? props.style : {}) }}
