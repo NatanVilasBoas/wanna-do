@@ -1,6 +1,7 @@
 import { Text } from "react-native"
 import { SegmentedButtons } from "react-native-paper"
 
+import { RouteProp } from "@react-navigation/native"
 import { addDoc, collection } from "firebase/firestore"
 import { useFormik } from "formik"
 
@@ -12,6 +13,7 @@ import DateInput from "../../components/molecules/DateInput"
 import Input from "../../components/molecules/Input"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
 import Header from "../../components/organisms/Header"
+import { RootStack } from "../../routes/types"
 import { dateFormat, timeFormat } from "../../shared/utils/dateFormat"
 import theme from "../../styles/theme"
 import { Container, DateContainerRow, Inner } from "./styles"
@@ -20,11 +22,18 @@ interface NewTask {
   title: string
   description: string
   priority: "low" | "medium" | "high"
+  status: "todo" | "doing" | "done"
   date: string
   time: string
 }
 
-export default function AddTask() {
+interface AddTaskProps {
+  route: RouteProp<RootStack, "AddTask">
+}
+
+export default function AddTask({ route }: AddTaskProps) {
+  const params = route.params
+
   const handleSubmit = async ({ title, description, priority, date, time }: NewTask) => {
     addDoc(collection(FIRESTORE_DB, "tasks"), { title, description, priority, date, time })
     console.log("task adicionada")
@@ -43,7 +52,8 @@ export default function AddTask() {
       description: "",
       priority: "low",
       date: dateFormat(actualDate),
-      time: timeFormat(actualDate)
+      time: timeFormat(actualDate),
+      status: "todo"
     },
     onSubmit: handleSubmit
   })
@@ -91,6 +101,23 @@ export default function AddTask() {
               containerStyle={{ width: "35%" }}
             />
           </DateContainerRow>
+          {params?.isEdit && (
+            <SegmentedButtons
+              theme={{
+                colors: {
+                  secondaryContainer: theme.colors.primaryLight,
+                  onSecondaryContainer: theme.colors.greyLightest
+                }
+              }}
+              value={formik.values.status}
+              onValueChange={formik.handleChange("status")}
+              buttons={[
+                { value: "todo", label: "A fazer" },
+                { value: "doing", label: "Fazendo" },
+                { value: "done", label: "Feito" }
+              ]}
+            />
+          )}
         </Inner>
         <BaseButton onPress={() => formik.handleSubmit()} style={{ marginBottom: 60 }}>
           <Text style={{ textAlign: "center" }}>Criar tarefa</Text>

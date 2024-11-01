@@ -14,7 +14,7 @@ export const Inner = styled.View`
 `
 
 export const DateContainerRow = styled.View`
-  margin-top: 24px;
+  margin: 24px 0px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
