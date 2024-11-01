@@ -5,6 +5,7 @@ import Toast from "react-native-toast-message"
 import { RouteProp } from "@react-navigation/native"
 import { addDoc, collection } from "firebase/firestore"
 import { useFormik } from "formik"
+import { object, string } from "yup"
 
 import { FIRESTORE_DB } from "../../../firebaseConfig"
 import BaseButton from "../../components/atoms/BaseButton"
@@ -32,13 +33,22 @@ interface AddTaskProps {
   route: RouteProp<RootStack, "AddTask">
 }
 
+const validationSchema = object({
+  title: string().required("Título é obrigatório"),
+  priority: string().required("Prioridade é obrigatória"),
+  date: string().required("Data é obrigatória"),
+  time: string()
+    .required("Horário é obrigatório")
+    .test("Horário inválido", value => validateTime(value))
+})
+
+const validateTime = (text: string) => {
+  const isValid = /^([01]\d|2[0-3]):([0-5]\d)$/.test(text)
+  return isValid
+}
+
 export default function AddTask({ route }: AddTaskProps) {
   const params = route.params
-
-  const validateTime = (text: string) => {
-    const isValid = /^([01]\d|2[0-3]):([0-5]\d)$/.test(text)
-    return isValid
-  }
 
   const handleSubmit = async ({ title, description, priority, date, time }: NewTask) => {
     try {
@@ -67,6 +77,7 @@ export default function AddTask({ route }: AddTaskProps) {
       time: timeFormat(actualDate),
       status: "todo"
     },
+    validationSchema,
     onSubmit: handleSubmit
   })
 
@@ -77,7 +88,13 @@ export default function AddTask({ route }: AddTaskProps) {
       <Container>
         <Inner>
           <Title>Nova tarefa</Title>
-          <Input label="Título da tarefa" value={formik.values.title} onChangeText={formik.handleChange("title")} />
+          <Input
+            label="Título da tarefa"
+            value={formik.values.title}
+            onChangeText={formik.handleChange("title")}
+            showError={!!formik.errors.title}
+            textError={formik.errors.title}
+          />
           <Input
             label="Descrição"
             value={formik.values.description}
@@ -111,6 +128,8 @@ export default function AddTask({ route }: AddTaskProps) {
                 formik.handleChange("time")(text)
               }}
               containerStyle={{ width: "35%" }}
+              showError={!!formik.errors.time}
+              textError={formik.errors.time}
             />
           </DateContainerRow>
           {params?.isEdit && (
