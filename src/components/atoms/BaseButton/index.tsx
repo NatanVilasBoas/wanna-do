@@ -4,7 +4,7 @@ import theme from "../../../styles/theme"
 import Caption from "../Caption"
 import { Button } from "./styles"
 
-interface BaseButtonProps extends TouchableOpacityProps {
+type BaseButtonProps = TouchableOpacityProps & {
   children: React.ReactNode
 }
 

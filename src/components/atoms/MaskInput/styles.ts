@@ -3,10 +3,8 @@ import MaskInput from "react-native-mask-input"
 import styled from "styled-components/native"
 
 interface ContainerProps {
-  isActive: boolean
+  isActive?: boolean
 }
-
-export const Container = styled.View``
 
 export const StyledMaskInput = styled(MaskInput)<ContainerProps>`
   border-bottom-width: ${props => (props.isActive ? 1 : 0.5)}px;

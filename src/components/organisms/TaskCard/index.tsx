@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { TouchableOpacity } from "react-native"
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable"
 
 import AntDesign from "@expo/vector-icons/AntDesign"
@@ -7,6 +6,7 @@ import AntDesign from "@expo/vector-icons/AntDesign"
 import theme from "../../../styles/theme"
 import Caption from "../../atoms/Caption"
 import Description from "../../atoms/Description"
+import IconButton from "../../atoms/IconButton"
 import { ButtonsContainer, Container, TitleContainer } from "./styles"
 
 interface TaskProps {
@@ -27,12 +27,12 @@ export default function TaskCard({ title, description }: TaskProps) {
       rightThreshold={50}
       renderRightActions={() => (
         <ButtonsContainer>
-          <TouchableOpacity activeOpacity={0.8}>
+          <IconButton>
             <AntDesign name="edit" size={24} color={isOpenOptions ? theme.colors.greyDarkest : "transparent"} />
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8}>
+          </IconButton>
+          <IconButton>
             <AntDesign name="delete" size={24} color={isOpenOptions ? theme.colors.greyDarkest : "transparent"} />
-          </TouchableOpacity>
+          </IconButton>
         </ButtonsContainer>
       )}
     >

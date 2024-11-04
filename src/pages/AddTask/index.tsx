@@ -20,7 +20,7 @@ import { dateFormat, timeFormat } from "../../shared/utils/dateFormat"
 import theme from "../../styles/theme"
 import { Container, DateContainerRow, Inner } from "./styles"
 
-interface NewTask {
+type NewTask = {
   title: string
   description: string
   priority: "low" | "medium" | "high"
@@ -29,7 +29,7 @@ interface NewTask {
   time: string
 }
 
-interface AddTaskProps {
+type AddTaskProps = {
   route: RouteProp<RootStack, "AddTask">
 }
 

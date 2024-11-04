@@ -1,9 +1,8 @@
-import { TouchableOpacity } from "react-native"
-
 import AntDesign from "@expo/vector-icons/AntDesign"
 import Feather from "@expo/vector-icons/Feather"
 import { useNavigation } from "@react-navigation/native"
 
+import IconButton from "../../atoms/IconButton"
 import Title from "../../atoms/Title"
 import { Container } from "./styles"
 
@@ -19,18 +18,18 @@ export default function Header({ mode, backgroundColor }: HeaderProps) {
     <Container backgroundColor={backgroundColor}>
       {mode === "home" ? (
         <>
-          <TouchableOpacity activeOpacity={0.6}>
+          <IconButton>
             <Feather name="menu" size={24} color="black" />
-          </TouchableOpacity>
+          </IconButton>
           <Title style={{ marginBottom: 0 }}>Wanna Do</Title>
-          <TouchableOpacity activeOpacity={0.6}>
+          <IconButton>
             <AntDesign name="user" size={24} color="black" />
-          </TouchableOpacity>
+          </IconButton>
         </>
       ) : (
-        <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
+        <IconButton activeOpacity={0.6} onPress={() => navigation.goBack()}>
           <Feather name="arrow-left" size={24} color="black" />
-        </TouchableOpacity>
+        </IconButton>
       )}
     </Container>
   )

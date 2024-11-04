@@ -1,13 +1,13 @@
 import { useState } from "react"
-import { TextInputProps, ViewProps } from "react-native"
-import MaskInput, { Masks } from "react-native-mask-input"
-import { HelperText } from "react-native-paper"
+import { TextInputProps, View, ViewProps } from "react-native"
+import { Masks } from "react-native-mask-input"
 
 import theme from "../../../styles/theme"
 import Description from "../../atoms/Description"
-import { Container, StyledMaskInput } from "./styles"
+import InfoText from "../../atoms/InfoText"
+import MaskInput from "../../atoms/MaskInput"
 
-interface DateInputProps extends TextInputProps {
+type Props = TextInputProps & {
   value: string
   mode: "date" | "time"
   containerStyle?: ViewProps["style"]
@@ -15,10 +15,10 @@ interface DateInputProps extends TextInputProps {
   textError?: string
 }
 
-export default function DateInput({ value, mode, containerStyle, showError, textError, ...props }: DateInputProps) {
+export default function DateInput({ value, mode, containerStyle, showError, textError, ...props }: Props) {
   const [isActive, setIsActive] = useState(false)
   return (
-    <Container style={containerStyle}>
+    <View style={containerStyle}>
       <Description
         style={{
           paddingBottom: 4,
@@ -27,19 +27,18 @@ export default function DateInput({ value, mode, containerStyle, showError, text
       >
         {mode === "date" ? "Data" : "Horário"}
       </Description>
-      <StyledMaskInput
+      <MaskInput
+        mode={mode}
+        value={value}
         isActive={isActive}
-        style={{ fontSize: 16, ...(typeof props.style === "object" ? props.style : {}) }}
+        mask={mode === "time" ? [/\d/, /\d/, ":", /\d/, /\d/] : Masks.DATE_DDMMYYYY}
         onFocus={() => setIsActive(true)}
         onBlur={() => setIsActive(false)}
-        value={value}
-        mask={mode === "time" ? [/\d/, /\d/, ":", /\d/, /\d/] : Masks.DATE_DDMMYYYY}
-        keyboardType="decimal-pad"
         {...props}
       />
-      <HelperText type="error" visible={showError}>
+      <InfoText type="error" showError={showError}>
         {textError}
-      </HelperText>
-    </Container>
+      </InfoText>
+    </View>
   )
 }

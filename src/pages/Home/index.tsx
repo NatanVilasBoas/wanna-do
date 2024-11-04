@@ -8,15 +8,10 @@ import BaseButton from "../../components/atoms/BaseButton"
 import Caption from "../../components/atoms/Caption"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
 import Header from "../../components/organisms/Header"
-import TaskCard from "../../components/organisms/TaskCard"
+import Tasks from "../../components/templates/Tasks"
+import { Task } from "../../shared/interfaces/Task"
 import theme from "../../styles/theme"
-import { ButtonContainer, CardsContainer, Container, HeaderContainer } from "./styles"
-
-interface Task {
-  id: string
-  title: string
-  description: string
-}
+import { ButtonContainer, Container, HeaderContainer } from "./styles"
 
 export default function Home() {
   const navigation = useNavigation()
@@ -54,16 +49,7 @@ export default function Home() {
             <BaseButton onPress={() => navigation.navigate("AddTask")}>+ Criar tarefa</BaseButton>
           </ButtonContainer>
         </HeaderContainer>
-        <CardsContainer>
-          {tasks.length === 0 && (
-            <Caption style={{ color: theme.colors.greyDarkest, textAlign: "center", marginTop: 64 }}>
-              Não há tarefas no momento.
-            </Caption>
-          )}
-          {tasks.map(task => {
-            return <TaskCard key={task.id} title={task.title} description={task.description} />
-          })}
-        </CardsContainer>
+        <Tasks data={tasks} />
       </Container>
     </>
   )
