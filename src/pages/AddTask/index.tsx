@@ -2,7 +2,7 @@ import { Text } from "react-native"
 import { SegmentedButtons } from "react-native-paper"
 import Toast from "react-native-toast-message"
 
-import { RouteProp } from "@react-navigation/native"
+import { RouteProp, useNavigation } from "@react-navigation/native"
 import { addDoc, collection } from "firebase/firestore"
 import { useFormik } from "formik"
 import { object, string } from "yup"
@@ -39,7 +39,7 @@ const validationSchema = object({
   date: string().required("Data é obrigatória"),
   time: string()
     .required("Horário é obrigatório")
-    .test("Horário inválido", value => validateTime(value))
+    .test("validate-hour", "Horário inválido", value => validateTime(value))
 })
 
 const validateTime = (text: string) => {
@@ -49,6 +49,7 @@ const validateTime = (text: string) => {
 
 export default function AddTask({ route }: AddTaskProps) {
   const params = route.params
+  const navigation = useNavigation()
 
   const handleSubmit = async ({ title, description, priority, date, time }: NewTask) => {
     try {
@@ -57,6 +58,7 @@ export default function AddTask({ route }: AddTaskProps) {
         type: "success",
         text1: "Task criada"
       })
+      navigation.goBack()
     } catch (error: any) {
       Toast.show({
         type: "error",
@@ -120,6 +122,8 @@ export default function AddTask({ route }: AddTaskProps) {
               mode="date"
               onChangeText={text => formik.handleChange("date")(text)}
               containerStyle={{ width: "55%" }}
+              showError={!!formik.errors.date}
+              textError={formik.errors.date}
             />
             <DateInput
               value={formik.values.time}

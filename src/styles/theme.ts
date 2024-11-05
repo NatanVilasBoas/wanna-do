@@ -5,7 +5,9 @@ const theme = {
     secondaryLight: "#FFBA00",
     secondaryMain: "#BB8A52",
     greyDarkest: "#181c14",
-    greyLightest: "#F5F5F7"
+    greyLightest: "#F5F5F7",
+    feedbackSuccess: "#8FD14F",
+    feedbackError: "#FF6600"
   }
 }
 

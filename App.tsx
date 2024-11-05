@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components"
 
 import RootNavigator from "./src/routes"
 import theme from "./src/styles/theme"
+import { toastConfig } from "./src/styles/toastConfig"
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
       <NavigationContainer>
         <ThemeProvider theme={theme}>
           <RootNavigator />
-          <Toast />
+          <Toast config={toastConfig} />
         </ThemeProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
