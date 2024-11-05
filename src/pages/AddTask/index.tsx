@@ -16,18 +16,12 @@ import Input from "../../components/molecules/Input"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
 import Header from "../../components/organisms/Header"
 import { RootStack } from "../../routes/types"
+import { Task } from "../../shared/interfaces/Task"
 import { dateFormat, timeFormat } from "../../shared/utils/dateFormat"
 import theme from "../../styles/theme"
 import { Container, DateContainerRow, Inner } from "./styles"
 
-type NewTask = {
-  title: string
-  description: string
-  priority: "low" | "medium" | "high"
-  status: "todo" | "doing" | "done"
-  date: string
-  time: string
-}
+type NewTask = Omit<Task, "id">
 
 type AddTaskProps = {
   route: RouteProp<RootStack, "AddTask">
@@ -51,9 +45,9 @@ export default function AddTask({ route }: AddTaskProps) {
   const params = route.params
   const navigation = useNavigation()
 
-  const handleSubmit = async ({ title, description, priority, date, time }: NewTask) => {
+  const handleSubmit = async (props: NewTask) => {
     try {
-      addDoc(collection(FIRESTORE_DB, "tasks"), { title, description, priority, date, time })
+      addDoc(collection(FIRESTORE_DB, "tasks"), { ...props })
       Toast.show({
         type: "success",
         text1: "Task criada"

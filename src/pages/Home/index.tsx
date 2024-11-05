@@ -26,6 +26,7 @@ export default function Home() {
 
         const tasks: Task[] = []
         snapshot.docs.forEach(doc => {
+          console.log(doc.data())
           tasks.push({
             id: doc.id,
             ...doc.data()
