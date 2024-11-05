@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import Toast from "react-native-toast-message"
 
 import { useNavigation } from "@react-navigation/native"
 import { collection, onSnapshot } from "firebase/firestore"
@@ -47,16 +46,7 @@ export default function Home() {
         <HeaderContainer>
           <Caption style={{ color: theme.colors.greyDarkest }}>Seja bem vindo!</Caption>
           <ButtonContainer>
-            <BaseButton
-              onPress={() =>
-                Toast.show({
-                  type: "info",
-                  text1: "Teste dnv hehe"
-                })
-              }
-            >
-              + Criar tarefa
-            </BaseButton>
+            <BaseButton onPress={() => navigation.navigate("AddTask")}>+ Criar tarefa</BaseButton>
           </ButtonContainer>
         </HeaderContainer>
         <Tasks data={tasks} />
