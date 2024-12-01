@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react"
 import { Text } from "react-native"
 import { SegmentedButtons } from "react-native-paper"
 import Toast from "react-native-toast-message"
 
 import { RouteProp, useNavigation } from "@react-navigation/native"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore"
 import { useFormik } from "formik"
 import { object, string } from "yup"
 
@@ -44,25 +45,66 @@ const validateTime = (text: string) => {
 export default function AddTask({ route }: AddTaskProps) {
   const params = route.params
   const navigation = useNavigation()
+  const [hasEditTask, setHasEditTask] = useState<boolean>(false)
 
   const handleSubmit = async (props: NewTask) => {
     try {
-      addDoc(collection(FIRESTORE_DB, "tasks"), { ...props })
-      Toast.show({
-        type: "success",
-        text1: "Task criada"
-      })
+      if (hasEditTask && params?.id) {
+        const taskRef = doc(FIRESTORE_DB, "tasks", params.id)
+        await updateDoc(taskRef, { ...props })
+        Toast.show({
+          type: "success",
+          text1: "Task editada"
+        })
+      } else {
+        await addDoc(collection(FIRESTORE_DB, "tasks"), { ...props })
+        Toast.show({
+          type: "success",
+          text1: "Task criada"
+        })
+      }
       navigation.goBack()
     } catch (error: any) {
       Toast.show({
         type: "error",
         text1: "Não foi possível criar a task",
-        text2: error
+        text2: error.message
       })
     }
   }
 
   const actualDate = new Date()
+
+  useEffect(() => {
+    setHasEditTask(false)
+    if (params?.id) {
+      const fetchTask = async () => {
+        try {
+          const taskRef = collection(FIRESTORE_DB, "tasks")
+          const docQuery = doc(taskRef, params?.id)
+          const docSnapshot = await getDoc(docQuery)
+          if (docSnapshot.exists()) {
+            setHasEditTask(true)
+            const fetchedTask = docSnapshot.data() as Task
+            formik.setFieldValue("title", fetchedTask?.title)
+            formik.setFieldValue("description", fetchedTask?.description)
+            formik.setFieldValue("date", fetchedTask?.date)
+            formik.setFieldValue("priority", fetchedTask?.priority)
+            formik.setFieldValue("time", fetchedTask?.time)
+            formik.setFieldValue("status", fetchedTask?.status)
+          }
+        } catch (error: any) {
+          Toast.show({
+            type: "error",
+            text1: "Erro ao buscar tarefa",
+            text2: error.message || "Erro desconhecido"
+          })
+        }
+      }
+
+      fetchTask()
+    }
+  }, [params?.id])
 
   const formik = useFormik({
     initialValues: {
@@ -130,7 +172,7 @@ export default function AddTask({ route }: AddTaskProps) {
               textError={formik.errors.time}
             />
           </DateContainerRow>
-          {params?.isEdit && (
+          {hasEditTask && (
             <SegmentedButtons
               theme={{
                 colors: {

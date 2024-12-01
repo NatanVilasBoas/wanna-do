@@ -1,4 +1,4 @@
 export type RootStack = {
   Home: undefined
-  AddTask?: { isEdit: boolean }
+  AddTask?: { id?: string }
 }
