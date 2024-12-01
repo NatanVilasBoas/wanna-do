@@ -37,10 +37,10 @@ export default function TaskCard({ task }: TaskProps) {
         </ButtonsContainer>
       )}
     >
-      <Container onPress={() => setIsOpenDropdown(!isOpenDropdown)}>
+      <Container onPress={() => setIsOpenDropdown(!isOpenDropdown)} priority={task.priority}>
         <TitleContainer>
-          <Caption style={{ color: theme.colors.greyLightest }}>{task.title}</Caption>
-          <Description>{task.date}</Description>
+          <Caption style={{ color: theme.colors.greyLightest, flex: 2 }}>{task.title}</Caption>
+          <Description style={{ flex: 1 }}>{task.date}</Description>
           <AntDesign name={isOpenDropdown ? "up" : "down"} size={24} color={theme.colors.greyLightest} />
         </TitleContainer>
         {isOpenDropdown && (
