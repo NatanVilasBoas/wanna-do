@@ -17,7 +17,7 @@ export default function Tasks({ data }: Props) {
         </Caption>
       )}
       {data.map(task => {
-        return <TaskCard key={task.id} title={task.title} description={task.description} />
+        return <TaskCard key={task.id} task={task} />
       })}
     </CardsContainer>
   )

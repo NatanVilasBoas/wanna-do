@@ -1,8 +1,10 @@
 import { useState } from "react"
+import { View } from "react-native"
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable"
 
 import AntDesign from "@expo/vector-icons/AntDesign"
 
+import { Task } from "../../../shared/interfaces/Task"
 import theme from "../../../styles/theme"
 import Caption from "../../atoms/Caption"
 import Description from "../../atoms/Description"
@@ -10,11 +12,10 @@ import IconButton from "../../atoms/IconButton"
 import { ButtonsContainer, Container, TitleContainer } from "./styles"
 
 interface TaskProps {
-  title: string
-  description: string
+  task: Task
 }
 
-export default function TaskCard({ title, description }: TaskProps) {
+export default function TaskCard({ task }: TaskProps) {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false)
   const [isOpenOptions, setIsOpenOptions] = useState(false)
 
@@ -38,10 +39,15 @@ export default function TaskCard({ title, description }: TaskProps) {
     >
       <Container onPress={() => setIsOpenDropdown(!isOpenDropdown)}>
         <TitleContainer>
-          <Caption style={{ color: theme.colors.greyLightest }}>{title}</Caption>
+          <Caption style={{ color: theme.colors.greyLightest }}>{task.title}</Caption>
+          <Description>{task.date}</Description>
           <AntDesign name={isOpenDropdown ? "up" : "down"} size={24} color={theme.colors.greyLightest} />
         </TitleContainer>
-        {isOpenDropdown && <Description style={{ color: theme.colors.greyLightest }}>{description}</Description>}
+        {isOpenDropdown && (
+          <View style={{ marginTop: 12 }}>
+            <Description style={{ color: theme.colors.greyLightest }}>{task.description}</Description>
+          </View>
+        )}
       </Container>
     </ReanimatedSwipeable>
   )
