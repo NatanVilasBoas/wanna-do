@@ -5,6 +5,7 @@ import Toast from "react-native-toast-message"
 
 import AntDesign from "@expo/vector-icons/AntDesign"
 import { useNavigation } from "@react-navigation/native"
+import dayjs from "dayjs"
 import { collection, deleteDoc, doc } from "firebase/firestore"
 
 import { FIRESTORE_DB } from "../../../../firebaseConfig"
@@ -62,7 +63,9 @@ export default function TaskCard({ task }: TaskProps) {
       <Container onPress={() => setIsOpenDropdown(!isOpenDropdown)} priority={task.priority}>
         <TitleContainer>
           <Caption style={{ color: theme.colors.greyLightest, flex: 2 }}>{task.title}</Caption>
-          <Description style={{ flex: 1 }}>{task.date}</Description>
+          <Description style={{ flex: 1, color: theme.colors.greyLightest }}>
+            {dayjs(task.date).format("DD/MM/YY [às] HH:MM")}
+          </Description>
           <AntDesign name={isOpenDropdown ? "up" : "down"} size={24} color={theme.colors.greyLightest} />
         </TitleContainer>
         {isOpenDropdown && (

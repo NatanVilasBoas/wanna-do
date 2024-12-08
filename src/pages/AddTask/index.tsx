@@ -4,6 +4,7 @@ import { SegmentedButtons } from "react-native-paper"
 import Toast from "react-native-toast-message"
 
 import { RouteProp, useNavigation } from "@react-navigation/native"
+import dayjs from "dayjs"
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore"
 import { useFormik } from "formik"
 import { object, string } from "yup"
@@ -18,7 +19,7 @@ import CustomStatusBar from "../../components/organisms/CustomStatusBar"
 import Header from "../../components/organisms/Header"
 import { RootStack } from "../../routes/types"
 import { Task } from "../../shared/interfaces/Task"
-import { dateFormat, timeFormat } from "../../shared/utils/dateFormat"
+import { convertToTimestamp, dateFormat, timeFormat } from "../../shared/utils/dateFormat"
 import theme from "../../styles/theme"
 import { Container, DateContainerRow, Inner } from "./styles"
 
@@ -31,15 +32,22 @@ type AddTaskProps = {
 const validationSchema = object({
   title: string().required("Título é obrigatório"),
   priority: string().required("Prioridade é obrigatória"),
-  date: string().required("Data é obrigatória"),
+  date: string()
+    .required("Data é obrigatória")
+    .test("validate-time", "Data inválida", value => validateDate(value)),
   time: string()
     .required("Horário é obrigatório")
     .test("validate-hour", "Horário inválido", value => validateTime(value))
 })
 
-const validateTime = (text: string) => {
-  const isValid = /^([01]\d|2[0-3]):([0-5]\d)$/.test(text)
-  return isValid
+const validateDate = (date: string): boolean => {
+  if (!date) return false
+  const trimmedDate = date.trim()
+  return dayjs(trimmedDate, "DD/MM/YYYY", true).isValid()
+}
+
+const validateTime = (time: string): boolean => {
+  return /^([01]\d|2[0-3]):([0-5]\d)$/.test(time)
 }
 
 export default function AddTask({ route }: AddTaskProps) {
@@ -49,15 +57,25 @@ export default function AddTask({ route }: AddTaskProps) {
 
   const handleSubmit = async (props: NewTask) => {
     try {
+      const timestampDate = convertToTimestamp(props.date, props.time)
+
+      const payload = {
+        title: props.title,
+        description: props.description,
+        priority: props.priority,
+        date: timestampDate,
+        status: props.status
+      }
+
       if (hasEditTask && params?.id) {
         const taskRef = doc(FIRESTORE_DB, "tasks", params.id)
-        await updateDoc(taskRef, { ...props })
+        await updateDoc(taskRef, payload)
         Toast.show({
           type: "success",
           text1: "Task editada"
         })
       } else {
-        await addDoc(collection(FIRESTORE_DB, "tasks"), { ...props })
+        await addDoc(collection(FIRESTORE_DB, "tasks"), payload)
         Toast.show({
           type: "success",
           text1: "Task criada"
