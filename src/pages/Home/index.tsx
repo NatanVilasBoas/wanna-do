@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { Animated, FlatList } from "react-native"
 
 import { useNavigation } from "@react-navigation/native"
 import { collection, onSnapshot } from "firebase/firestore"
@@ -6,6 +7,8 @@ import { collection, onSnapshot } from "firebase/firestore"
 import { FIRESTORE_DB } from "../../../firebaseConfig"
 import BaseButton from "../../components/atoms/BaseButton"
 import Caption from "../../components/atoms/Caption"
+import Pagination from "../../components/molecules/Pagination"
+import Slideritem from "../../components/molecules/SliderItem"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
 import Header from "../../components/organisms/Header"
 import Tasks from "../../components/templates/Tasks"
@@ -16,6 +19,27 @@ import { ButtonContainer, Container, HeaderContainer } from "./styles"
 export default function Home() {
   const navigation = useNavigation()
   const [tasks, setTasks] = useState<Task[]>([])
+  const [paginationIndex, setPaginationIndex] = useState(0)
+  const scrollX = useRef(new Animated.Value(0)).current
+
+  const data = [
+    {
+      title: "teste 1",
+      description: "hehehe"
+    },
+    {
+      title: "teste 2",
+      description: "hehehe"
+    },
+    {
+      title: "teste 3",
+      description: "hehehe"
+    },
+    {
+      title: "teste 4",
+      description: "hehehe"
+    }
+  ]
 
   useEffect(() => {
     const taskRef = collection(FIRESTORE_DB, "tasks")
@@ -46,6 +70,19 @@ export default function Home() {
       <Container>
         <HeaderContainer>
           <Caption style={{ color: theme.colors.greyDarkest }}>Seja bem vindo!</Caption>
+          <Animated.FlatList
+            data={data}
+            renderItem={({ item }) => <Slideritem item={item} />}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+              { useNativeDriver: false } // Necessário para FlatList
+            )}
+            keyExtractor={(_, index) => index.toString()}
+            pagingEnabled
+          />
+          <Pagination items={data} scrollX={scrollX} />
           <ButtonContainer>
             <BaseButton onPress={() => navigation.navigate("AddTask")}>+ Criar tarefa</BaseButton>
           </ButtonContainer>
