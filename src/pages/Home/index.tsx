@@ -1,26 +1,20 @@
-import { useEffect, useRef, useState } from "react"
-import { Animated, FlatList } from "react-native"
+import { useEffect, useState } from "react"
 
 import { useNavigation } from "@react-navigation/native"
 import { collection, onSnapshot } from "firebase/firestore"
 
 import { FIRESTORE_DB } from "../../../firebaseConfig"
 import BaseButton from "../../components/atoms/BaseButton"
-import Caption from "../../components/atoms/Caption"
-import Pagination from "../../components/molecules/Pagination"
-import Slideritem from "../../components/molecules/SliderItem"
+import Carroussel from "../../components/organisms/Carroussel"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
 import Header from "../../components/organisms/Header"
 import Tasks from "../../components/templates/Tasks"
 import { Task } from "../../shared/interfaces/Task"
-import theme from "../../styles/theme"
 import { ButtonContainer, Container, HeaderContainer } from "./styles"
 
 export default function Home() {
   const navigation = useNavigation()
   const [tasks, setTasks] = useState<Task[]>([])
-  const [paginationIndex, setPaginationIndex] = useState(0)
-  const scrollX = useRef(new Animated.Value(0)).current
 
   const data = [
     {
@@ -69,20 +63,7 @@ export default function Home() {
       <Header mode="home" />
       <Container>
         <HeaderContainer>
-          <Caption style={{ color: theme.colors.greyDarkest }}>Seja bem vindo!</Caption>
-          <Animated.FlatList
-            data={data}
-            renderItem={({ item }) => <Slideritem item={item} />}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-              { useNativeDriver: false } // Necessário para FlatList
-            )}
-            keyExtractor={(_, index) => index.toString()}
-            pagingEnabled
-          />
-          <Pagination items={data} scrollX={scrollX} />
+          <Carroussel data={data} />
           <ButtonContainer>
             <BaseButton onPress={() => navigation.navigate("AddTask")}>+ Criar tarefa</BaseButton>
           </ButtonContainer>
