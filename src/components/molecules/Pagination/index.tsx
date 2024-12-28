@@ -36,7 +36,7 @@ export default function Pagination({ items, scrollX }: Props) {
 
         return (
           <Animated.View
-            key={index}
+            key={_.title}
             style={{
               transform: [{ scale }],
               opacity,

@@ -1,5 +1,3 @@
-import { Dimensions, View } from "react-native"
-
 import Description from "../../atoms/Description"
 import Title from "../../atoms/Title"
 import { Container } from "./styles"
