@@ -106,9 +106,9 @@ export default function AddTask({ route }: AddTaskProps) {
             const fetchedTask = docSnapshot.data() as Task
             formik.setFieldValue("title", fetchedTask?.title)
             formik.setFieldValue("description", fetchedTask?.description)
-            formik.setFieldValue("date", fetchedTask?.date)
+            formik.setFieldValue("date", dayjs(fetchedTask?.date).format("DD/MM/YYYY"))
             formik.setFieldValue("priority", fetchedTask?.priority)
-            formik.setFieldValue("time", fetchedTask?.time)
+            formik.setFieldValue("time", dayjs(fetchedTask?.date).format("HH:mm"))
             formik.setFieldValue("status", fetchedTask?.status)
           }
         } catch (error: any) {

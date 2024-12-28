@@ -64,7 +64,7 @@ export default function TaskCard({ task }: TaskProps) {
         <TitleContainer>
           <Caption style={{ color: theme.colors.greyLightest, flex: 2 }}>{task.title}</Caption>
           <Description style={{ flex: 1, color: theme.colors.greyLightest }}>
-            {dayjs(task.date).format("DD/MM/YY [às] HH:MM")}
+            {dayjs(task.date).format("DD/MM/YY [às] HH:mm")}
           </Description>
           <AntDesign name={isOpenDropdown ? "up" : "down"} size={24} color={theme.colors.greyLightest} />
         </TitleContainer>
