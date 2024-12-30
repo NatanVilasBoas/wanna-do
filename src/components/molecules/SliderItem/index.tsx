@@ -1,19 +1,9 @@
-import Description from "../../atoms/Description"
-import Title from "../../atoms/Title"
 import { Container } from "./styles"
 
 interface Props {
-  item: {
-    title: string
-    description?: string
-  }
+  item: React.ReactNode
 }
 
 export default function Slideritem({ item }: Props) {
-  return (
-    <Container>
-      <Title>{item.title}</Title>
-      <Description>{item.description}</Description>
-    </Container>
-  )
+  return <Container>{item}</Container>
 }

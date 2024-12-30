@@ -3,10 +3,7 @@ import { Animated, Dimensions } from "react-native"
 import { Container } from "./styles"
 
 interface Props {
-  items: {
-    title: string
-    description?: string
-  }[]
+  items: React.ReactNode[]
   scrollX: Animated.Value
 }
 
@@ -36,7 +33,7 @@ export default function Pagination({ items, scrollX }: Props) {
 
         return (
           <Animated.View
-            key={_.title}
+            key={index}
             style={{
               transform: [{ scale }],
               opacity,

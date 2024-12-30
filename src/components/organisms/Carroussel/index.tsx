@@ -5,10 +5,7 @@ import Pagination from "../../molecules/Pagination"
 import Slideritem from "../../molecules/SliderItem"
 
 interface Props {
-  data: {
-    title: string
-    description: string
-  }[]
+  data: React.ReactNode[]
 }
 
 export default function Carroussel({ data }: Props) {
