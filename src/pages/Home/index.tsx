@@ -6,6 +6,7 @@ import { collection, onSnapshot } from "firebase/firestore"
 import { FIRESTORE_DB } from "../../../firebaseConfig"
 import BaseButton from "../../components/atoms/BaseButton"
 import Title from "../../components/atoms/Title"
+import DateTime from "../../components/molecules/DateTime"
 import Carroussel from "../../components/organisms/Carroussel"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
 import Header from "../../components/organisms/Header"
@@ -16,10 +17,9 @@ import { ButtonContainer, Container, HeaderContainer } from "./styles"
 export default function Home() {
   const navigation = useNavigation()
   const [tasks, setTasks] = useState<Task[]>([])
-  const actualDate = new Date()
 
   const data: React.ReactNode[] = [
-    <Title key="1">{actualDate.toLocaleDateString()}</Title>,
+    <DateTime key="1" />,
     <Title key="2">Teste 2: hehehe</Title>,
     <Title key="3">Teste 3: hehehe</Title>,
     <Title key="4">Teste 4: hehehe</Title>
