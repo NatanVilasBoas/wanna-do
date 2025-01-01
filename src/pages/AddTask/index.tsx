@@ -209,7 +209,7 @@ export default function AddTask({ route }: AddTaskProps) {
           )}
         </Inner>
         <BaseButton onPress={() => formik.handleSubmit()} style={{ marginBottom: 60 }}>
-          <Text style={{ textAlign: "center" }}>Criar tarefa</Text>
+          <Text style={{ textAlign: "center" }}>{hasEditTask ? "Editar tarefa" : "Criar tarefa"}</Text>
         </BaseButton>
       </Container>
     </>

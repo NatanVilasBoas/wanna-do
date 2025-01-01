@@ -6,6 +6,7 @@ import { collection, onSnapshot } from "firebase/firestore"
 import { FIRESTORE_DB } from "../../../firebaseConfig"
 import BaseButton from "../../components/atoms/BaseButton"
 import Title from "../../components/atoms/Title"
+import CircularProgressBar from "../../components/molecules/CircularProgressBar"
 import DateTime from "../../components/molecules/DateTime"
 import Carroussel from "../../components/organisms/Carroussel"
 import CustomStatusBar from "../../components/organisms/CustomStatusBar"
@@ -18,11 +19,23 @@ export default function Home() {
   const navigation = useNavigation()
   const [tasks, setTasks] = useState<Task[]>([])
 
+  // Cálculo de porcentagem geral
+  const completedTasks = tasks.filter(task => task.status === "done").length
+  const totalTasks = tasks.length
+  const completionPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0
+
+  // Cálculo de porcentagem para tarefas de alta prioridade
+  const highPriorityTasks = tasks.filter(task => task.priority === "high")
+  const completedHighPriorityTasks = highPriorityTasks.filter(task => task.status === "done").length
+
   const data: React.ReactNode[] = [
     <DateTime key="1" />,
-    <Title key="2">Teste 2: hehehe</Title>,
-    <Title key="3">Teste 3: hehehe</Title>,
-    <Title key="4">Teste 4: hehehe</Title>
+    <CircularProgressBar
+      key="2"
+      value={completionPercentage}
+      highPriorityTasks={highPriorityTasks.length}
+      highPriorityTasksConclused={completedHighPriorityTasks}
+    />
   ]
 
   useEffect(() => {
