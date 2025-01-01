@@ -4,11 +4,7 @@ import { DaysOfWeek } from "../../../shared/enums"
 import theme from "../../../styles/theme"
 import { Container, DateContainer, DateText, GreetingsText, TimeAndDayContainer, TimeText } from "./styles"
 
-interface Props {
-  key?: string
-}
-
-export default function DateTime({ key }: Props) {
+export default function DateTime() {
   const hour = dayjs().hour()
   const getGreeting = () => {
     if (hour >= 6 && hour < 12) return "Bom dia"
@@ -16,7 +12,7 @@ export default function DateTime({ key }: Props) {
     return "Boa noite"
   }
   return (
-    <Container key={key}>
+    <Container>
       <GreetingsText>
         {getGreeting()}, <GreetingsText style={{ color: theme.colors.primaryMain }}>Natan</GreetingsText>
       </GreetingsText>

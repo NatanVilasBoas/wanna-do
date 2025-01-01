@@ -7,15 +7,14 @@ import Title from "../../atoms/Title"
 import { Container } from "./styles"
 
 interface Props {
-  key?: string
   value: number
   highPriorityTasks: number
   highPriorityTasksConclused: number
 }
 
-export default function CircularProgressBar({ key, value, highPriorityTasks, highPriorityTasksConclused }: Props) {
+export default function CircularProgressBar({ value, highPriorityTasks, highPriorityTasksConclused }: Props) {
   return (
-    <Container key={key}>
+    <Container>
       <CircularProgress
         value={Math.round(value)}
         radius={64}

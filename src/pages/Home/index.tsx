@@ -5,7 +5,6 @@ import { collection, onSnapshot } from "firebase/firestore"
 
 import { FIRESTORE_DB } from "../../../firebaseConfig"
 import BaseButton from "../../components/atoms/BaseButton"
-import Title from "../../components/atoms/Title"
 import CircularProgressBar from "../../components/molecules/CircularProgressBar"
 import DateTime from "../../components/molecules/DateTime"
 import Carroussel from "../../components/organisms/Carroussel"
