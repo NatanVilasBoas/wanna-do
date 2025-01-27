@@ -4,6 +4,10 @@ interface BorderProps {
   priority: "low" | "medium" | "high"
 }
 
+interface StatusTagProps {
+  status: "todo" | "doing" | "done"
+}
+
 export const Container = styled.TouchableOpacity.attrs<BorderProps>(() => ({
   activeOpacity: 0.8
 }))`
@@ -38,4 +42,30 @@ export const ButtonsContainer = styled.View`
   justify-content: space-between;
   background-color: transparent;
   margin: 0px 24px;
+`
+
+export const TooltipContainer = styled.View`
+  gap: 24px;
+`
+
+export const StatusTagContainer = styled.View<StatusTagProps>`
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: ${({ status }) => {
+    switch (status) {
+      case "todo":
+        return "#F9C74F"
+      case "doing":
+        return "#F9844A"
+      case "done":
+        return "#43AA8B"
+      default:
+        return "#FFF"
+    }
+  }};
+  border-radius: 48px;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 12px;
 `
