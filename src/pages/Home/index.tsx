@@ -22,6 +22,7 @@ export default function Home() {
   const navigation = useNavigation()
   const [tasks, setTasks] = useState<Task[]>([])
   const [showFilterModal, setShowFilterModal] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Cálculo de porcentagem geral
   const completedTasks = tasks.filter(task => task.status === "done").length
@@ -45,11 +46,11 @@ export default function Home() {
   const executeQuery = async ({ status }: { status?: Task["status"] }) => {
     const taskRef = collection(FIRESTORE_DB, "tasks")
     setTasks([])
+    setIsLoading(true)
 
     if (!status) {
       const querySnapshot = await getDocs(taskRef)
       querySnapshot.docs.forEach(doc => {
-        console.log(doc.data())
         setTasks(prevTasks => [...prevTasks, { id: doc.id, ...doc.data() } as Task])
       })
     } else {
@@ -60,10 +61,13 @@ export default function Home() {
         setTasks(prevTasks => [...prevTasks, { id: doc.id, ...doc.data() } as Task])
       })
     }
+
+    setIsLoading(false)
   }
 
   useEffect(() => {
     const taskRef = collection(FIRESTORE_DB, "tasks")
+    setIsLoading(true)
 
     const subscriber = onSnapshot(taskRef, {
       next: snapshot => {
@@ -75,6 +79,7 @@ export default function Home() {
           } as Task)
         })
         setTasks(tasks)
+        setIsLoading(false)
       }
     })
 
@@ -96,7 +101,7 @@ export default function Home() {
             <Caption style={{ color: theme.colors.greyLightest }}>Filtrar</Caption>
           </FilterButton>
         </HeaderContainer>
-        <Tasks data={tasks} />
+        <Tasks data={tasks} isLoading={isLoading} />
       </Container>
       <FilterModal
         isVisible={showFilterModal}
