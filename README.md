@@ -1,4 +1,4 @@
-# TODO App
+# WannaDo App
 
 Um aplicativo de gerenciamento de tarefas desenvolvido com React Native e Firebase.
 
