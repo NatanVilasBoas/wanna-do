@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import AntDesign from "@expo/vector-icons/AntDesign"
 import { useNavigation } from "@react-navigation/native"
@@ -42,15 +42,24 @@ export default function Home() {
     />
   ]
 
-  const executeQuery = async ({ status }: { status: Task["status"] }) => {
+  const executeQuery = async ({ status }: { status?: Task["status"] }) => {
     const taskRef = collection(FIRESTORE_DB, "tasks")
     setTasks([])
-    const subscriber = query(taskRef, where("status", "==", status))
 
-    const querySnapshot = await getDocs(subscriber)
-    querySnapshot.docs.forEach(doc => {
-      setTasks(prevTasks => [...prevTasks, doc.data() as Task])
-    })
+    if (!status) {
+      const querySnapshot = await getDocs(taskRef)
+      querySnapshot.docs.forEach(doc => {
+        console.log(doc.data())
+        setTasks(prevTasks => [...prevTasks, { id: doc.id, ...doc.data() } as Task])
+      })
+    } else {
+      const subscriber = query(taskRef, where("status", "==", status))
+
+      const querySnapshot = await getDocs(subscriber)
+      querySnapshot.docs.forEach(doc => {
+        setTasks(prevTasks => [...prevTasks, { id: doc.id, ...doc.data() } as Task])
+      })
+    }
   }
 
   useEffect(() => {
